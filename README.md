@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Project Banner](assets/home-page.png)
+![Project Banner](exam-portal-architecture/assets/home-page.png)
 
 > **Engineering a high-performance Learning Management System (LMS) capable of serving 50+ government exams on 0.1 CPU and 512MB RAM.**
 
