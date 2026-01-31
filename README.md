@@ -33,27 +33,20 @@
 
 ---
 
-## 🏗️ System Architecture
 
-I moved away from the traditional `Model-View-Template` (MVT) database dependency. Since exam patterns are static until an official update, fetching them from SQL was unnecessary.
+#🏗️ System Architecture & Data Flow
+I moved away from the traditional Model-View-Template (MVT) database dependency for core content. Since exam patterns remain static until official updates, fetching them from a SQL database was an unnecessary bottleneck.
 
-### The "Data-Hydration" Workflow
+The Hybrid "Hydration" Model
+I implemented a split-tier data strategy:
 
+SQL Database: Handles transient and sensitive data (User Auth, Admin Logs, Analytics).
 
+In-Memory Dictionaries: Serve as a "NoSQL" layer for Exam Content, Syllabus, and Mock Tests, ensuring instant retrieval.
 
 graph LR
-    %% Database Tier
-    subgraph Data_Storage [Data Tier]
-        DB[(Database)]
-        T1[Users/Auth] --- DB
-        T2[Exam Content] --- DB
-        T3[Course Data] --- DB
-        T4[Analytics] --- DB
-    end
-
-   graph LR
-    %% Data Tier - Representing your Dict-based NoSQL approach
-    subgraph Data_Storage [Data Tier / In-Memory Dicts]
+    %% Data Tier
+    subgraph Data_Storage [Data Architecture]
         DB[(SQL Database)]
         DICT[[Python Dictionaries]]
         
@@ -64,40 +57,23 @@ graph LR
     end
 
     %% Main Application Flow
-    HOME[Home Page] --> LOGIN{Login}
-    
+    HOME[Home Page] --> LOGIN{Auth Gateway}
+
     %% User Flows
     LOGIN --> |Student| STU_DASH[Student Dashboard]
     LOGIN --> |Admin| ADM_DASH[Admin Dashboard]
 
-    %% Features
-    HOME --> GOVT[Govt Exam]
-    HOME --> COURSES[Courses]
-    HOME --> NOTIF[Notifications]
-    HOME --> GALL[Gallery]
-    HOME --> CONT[Contact]
-    HOME --> ABOUT[About]
+    %% Feature Access
+    HOME --> GOVT[Govt Exam Engine]
+    GOVT --> SYLL[Syllabus Hydration]
+    GOVT --> MOCK[Mock Test Engine]
 
-    %% Sub-Features
-    GOVT --> INTRO[Introduction]
-    INTRO --> SYLL[Syllabus]
-    INTRO --> MOCK[Mock Test]
-
-    %% External Connections
-    GALL --> IMG_API[[Image Hosting API]]
-    CONT --> FORM_API[[Web Form API]]
-    
-    %% System Connections (Data Hydration)
-    NOTIF -.-> DICT
-    COURSES -.-> DICT
+    %% Data Hydration Connections
     STU_DASH -.-> DB
-    ADM_DASH -.-> DB
+    SYLL -.-> DICT
     MOCK -.-> DICT
 
     %% Styling
-    style HOME fill:#f96,stroke:#333,stroke-width:2px
     style DB fill:#7eb26d,stroke:#333
     style DICT fill:#38B2AC,stroke:#333,color:#fff
-    style LOGIN fill:#d1e8ff,stroke:#004a99
-    style ADM_DASH fill:#ff9999,stroke:#900
-    style MOCK fill:#fff,stroke:#orange,stroke-width:3px
+    style MOCK fill:#fff,stroke:#ff9800,stroke-width:3px
