@@ -73,6 +73,28 @@ Exam patterns, syllabus, and mock questions **rarely change**. Querying SQL for 
 | Exam Content | Python Dictionaries |
 | Syllabus & Mock Tests | Python Dictionaries |
 
+
+
+---
+
+
+## 🧠 Key Implementation Details
+
+### 1️⃣ Dynamic Exam Routing (Unlimited Pages)
+
+**Problem**  
+Managing 50+ exams without creating separate HTML files or database tables.
+
+**Solution**  
+Implemented dynamic URL routing backed by dictionary-based lookups.
+
+```text
+/exam/rbi-2026 → key = "rbi-2026"
+
+
+    StudentDash -.-> DB
+    StudentDash -.-> DICT
+
 ---
 
 ### Architecture Diagram (Mermaid)
@@ -94,107 +116,7 @@ graph LR
     Auth --> StudentDash
     Auth --> AdminDash
 
-🧠 Key Implementation Details
-1️⃣ Dynamic Exam Routing (Unlimited Pages)
-
-Problem:
-50+ exams without creating 50 HTML files or database tables.
-
-Solution:
-Dynamic URL routing with dictionary lookups.
-
-/exam/rbi-2026 → key = "rbi-2026"
 
 
-View fetches data from SYLLABUS_DB[key]
-
-Injects into a single master template
-
-Lookup complexity: O(1)
-
-✅ One template → Unlimited exam pages
-
-2️⃣ Zero-Load Mock Test Engine
-
-Problem:
-Server crashes when many students submit tests simultaneously.
-
-Solution:
-Client-side evaluation using JavaScript.
-
-Answer key embedded invisibly
-
-Score calculated in browser
-
-No POST request
-
-No server processing
-
-✅ 0% server load during submissions
-
-3️⃣ Ultra-Lightweight UI
-
-Problem:
-Heavy CSS frameworks and JS libraries slow mobile users.
-
-Optimizations Used:
-
-Tailwind CSS (<50kb final bundle)
-
-Lazy-loaded images
-
-CSS-only off-canvas mobile menu
-
-No jQuery / no heavy plugins
-
-📊 Performance Metrics
-Metric	Traditional Django	EXAM-CORE
-RAM Usage (Idle)	~350 MB	~65 MB
-Page Load Time	1.8s – 3.0s	< 200ms
-Concurrent Users	~10 (Crash)	100+ Stable
-Monthly Cost	₹800 – ₹1500	₹0
-Scalability	Vertical Only	Horizontal-Ready
-🔮 Future Roadmap
-
-Planned enhancements without breaking the low-resource philosophy:
-
- Redis caching for trending exams
-
- Static Site Generation (SSG)
-
- PWA support (Offline mock tests)
-
- CDN-based asset delivery
-
- Exam recommendation engine
-
-👨‍💻 About the Engineer
-
-Satyam
-Full-Stack Developer & Cost-Optimization Enthusiast
-
-I specialize in building scalable systems under real-world constraints.
-I believe great engineering is not about using more tools —
-it’s about using fewer tools more intelligently.
-
-🔗 GitHub: Add link
-🔗 LinkedIn: Add link
-🚀 Live Project: Add link
 
 
-## 🧠 Key Implementation Details
-
-### 1️⃣ Dynamic Exam Routing (Unlimited Pages)
-
-**Problem**  
-Managing 50+ exams without creating separate HTML files or database tables.
-
-**Solution**  
-Implemented dynamic URL routing backed by dictionary-based lookups.
-
-```text
-/exam/rbi-2026 → key = "rbi-2026"
-
-
-    StudentDash -.-> DB
-    StudentDash -.-> DICT
