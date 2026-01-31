@@ -36,7 +36,7 @@ Instead of querying a slow database for every page load (which kills the CPU), I
 
 ### **System Architecture Diagram**
 
-![System Architecture](assets/architecture-diagram.png)
+![System Architecture](exam-portal-architecture/assets/architecture-diagram.png)
 
 > **The Flow:** By bypassing the SQL database for read-heavy operations (Syllabus & Questions), we reduce server response time from **~200ms** to **<20ms**.
 
@@ -51,7 +51,7 @@ Instead of querying a slow database for every page load (which kills the CPU), I
 * **Logic:** The URL `/exam/rbi-2026` captures the ID `rbi-2026`.
 * **Action:** The View looks up this Key in `SYLLABUS_DB` (O(1) complexity lookup).
 
-![Code Logic](assets/code-snippet.png)
+![Code Logic](exam-portal-architecture/assets/code-snippet.png)
 
 ### **Challenge 2: Running Mock Tests without Server Lag**
 **Problem:** Calculating scores on the server requires a POST request and page reloads. On 0.1 CPU, 50 students submitting at once would crash the server.
@@ -72,7 +72,7 @@ Instead of querying a slow database for every page load (which kills the CPU), I
 * **Off-Canvas Menu:** Custom sidebar implementation for maximum screen real estate.
 
 <div align="center">
-  <img src="assets/mobile-view.png" width="300" alt="Mobile View">
+  <img src="exam-portal-architecture/assets/mobile-view.png" width="300" alt="Mobile View">
   <p><em>Optimized Mobile Layout</em></p>
 </div>
 
@@ -95,11 +95,11 @@ By removing the Database bottleneck, the performance stats on Free Tier hardware
 
 | Student Dashboard | Admin Panel |
 | :---: | :---: |
-| ![Dashboard](assets/student-dashboard.png) | ![Admin](assets/admin-panel.png) |
+| ![Dashboard](exam-portal-architecture/assets/student-dashboard.png) | ![Admin](exam-portal-architecture/assets/admin-panel.png) |
 
 | Exam List Page | About Page |
 | :---: | :---: |
-| ![Exam List](assets/exam-list.png) | ![About](assets/about-us.png) |
+| ![Exam List]exam-portal-architecture/assets/exam-list.png) | ![About](exam-portal-architecture/assets/about-us.png) |
 
 ---
 
