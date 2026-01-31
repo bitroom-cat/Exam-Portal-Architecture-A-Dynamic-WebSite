@@ -51,6 +51,18 @@ graph LR
         T4[Analytics] --- DB
     end
 
+   graph LR
+    %% Data Tier - Representing your Dict-based NoSQL approach
+    subgraph Data_Storage [Data Tier / In-Memory Dicts]
+        DB[(SQL Database)]
+        DICT[[Python Dictionaries]]
+        
+        T1[Users/Auth] --- DB
+        T2[Exam Content] --- DICT
+        T3[Course Data] --- DICT
+        T4[Analytics] --- DB
+    end
+
     %% Main Application Flow
     HOME[Home Page] --> LOGIN{Login}
     
@@ -75,14 +87,17 @@ graph LR
     GALL --> IMG_API[[Image Hosting API]]
     CONT --> FORM_API[[Web Form API]]
     
-    %% System Connections
-    NOTIF -.-> DB
-    COURSES -.-> DB
+    %% System Connections (Data Hydration)
+    NOTIF -.-> DICT
+    COURSES -.-> DICT
     STU_DASH -.-> DB
     ADM_DASH -.-> DB
+    MOCK -.-> DICT
 
     %% Styling
     style HOME fill:#f96,stroke:#333,stroke-width:2px
     style DB fill:#7eb26d,stroke:#333
+    style DICT fill:#38B2AC,stroke:#333,color:#fff
     style LOGIN fill:#d1e8ff,stroke:#004a99
     style ADM_DASH fill:#ff9999,stroke:#900
+    style MOCK fill:#fff,stroke:#orange,stroke-width:3px
