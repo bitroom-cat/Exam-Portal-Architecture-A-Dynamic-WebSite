@@ -89,6 +89,12 @@ By removing the Database bottleneck, the performance stats on Free Tier hardware
 | **Concurrency** | Crashes at 10 users | **Handles 100+ concurrent** | **10x Scale** |
 | **Cost** | $10 - $20 / month | **$0.00 / month** | **Infinite ROI** |
 
+
+<div align="center">
+  <img src="exam-portal-architecture/assets/analytics.png" width="80%" alt="google analytics">
+  <p><em>Can handle large customers at a time </em></p>
+</div>
+
 ---
 
 ## 📸 Application Gallery
