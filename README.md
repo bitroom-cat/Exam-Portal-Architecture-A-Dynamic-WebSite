@@ -8,7 +8,7 @@
 [![Tech](https://img.shields.io/badge/Architecture-Data--Driven-blueviolet?style=for-the-badge)]()
 [![Speed](https://img.shields.io/badge/Latency-%3C100ms-orange?style=for-the-badge)]()
 
-**A high-performance, mobile-first LMS designed to serve dynamic content for 50+ government exams with zero database overhead.**
+**A high-performance, mobile-first  designed to serve dynamic content for 50+ government exams with zero database overhead.**
 
 [Explore Live Demo](#) • [View Architecture](#system-architecture) • [Key Features](#-key-implementation-details)
 
@@ -41,22 +41,48 @@ I moved away from the traditional `Model-View-Template` (MVT) database dependenc
 
 
 
-```mermaid
-graph TD
-    User((👤 Student)) -->|Request: /exam/rbi-2026| Router[🔀 Django URL Dispatcher]
-    Router -->|ID: rbi-2026| View[⚙️ Exam View Logic]
-    
-    subgraph "Data Layer (In-Memory)"
-        SyllabusDB[(📚 Syllabus_Data.py)]
-        MockDB[(📝 Mock_Test_DB.py)]
+graph LR
+    %% Database Tier
+    subgraph Data_Storage [Data Tier]
+        DB[(Database)]
+        T1[Users/Auth] --- DB
+        T2[Exam Content] --- DB
+        T3[Course Data] --- DB
+        T4[Analytics] --- DB
     end
+
+    %% Main Application Flow
+    HOME[Home Page] --> LOGIN{Login}
     
-    View -->|Fetch Metadata| SyllabusDB
-    View -->|Fetch Questions| MockDB
+    %% User Flows
+    LOGIN --> |Student| STU_DASH[Student Dashboard]
+    LOGIN --> |Admin| ADM_DASH[Admin Dashboard]
+
+    %% Features
+    HOME --> GOVT[Govt Exam]
+    HOME --> COURSES[Courses]
+    HOME --> NOTIF[Notifications]
+    HOME --> GALL[Gallery]
+    HOME --> CONT[Contact]
+    HOME --> ABOUT[About]
+
+    %% Sub-Features
+    GOVT --> INTRO[Introduction]
+    INTRO --> SYLL[Syllabus]
+    INTRO --> MOCK[Mock Test]
+
+    %% External Connections
+    GALL --> IMG_API[[Image Hosting API]]
+    CONT --> FORM_API[[Web Form API]]
     
-    View -->|Inject Context| Template[📄 Master Template]
-    Template -->|Render HTML| User
-    
-    style SyllabusDB fill:#092E20,stroke:#38B2AC,stroke-width:2px,color:#fff
-    style MockDB fill:#092E20,stroke:#38B2AC,stroke-width:2px,color:#fff
-    style View fill:#1a1a1a,stroke:#fff,color:#fff
+    %% System Connections
+    NOTIF -.-> DB
+    COURSES -.-> DB
+    STU_DASH -.-> DB
+    ADM_DASH -.-> DB
+
+    %% Styling
+    style HOME fill:#f96,stroke:#333,stroke-width:2px
+    style DB fill:#7eb26d,stroke:#333
+    style LOGIN fill:#d1e8ff,stroke:#004a99
+    style ADM_DASH fill:#ff9999,stroke:#900
