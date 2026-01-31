@@ -99,7 +99,7 @@ By removing the Database bottleneck, the performance stats on Free Tier hardware
 
 | Exam List Page | About Page |
 | :---: | :---: |
-| ![Exam List]exam-portal-architecture/assets/exam-list.png) | ![About](exam-portal-architecture/assets/about.png) |
+| ![Exam List](exam-portal-architecture/assets/govt-exam-page.png) | ![About](exam-portal-architecture/assets/about.png) |
 
 ---
 
